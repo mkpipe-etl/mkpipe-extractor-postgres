@@ -2,7 +2,7 @@ import pkg_resources
 import os
 
 def get_jar_path(filename):
-    package_name = "mkpipe-core"  # Adjust according to where the jars are located
+    package_name = "mkpipe"  # Adjust according to where the jars are located
     try:
         jar_path = pkg_resources.resource_filename(package_name, f'jars/{filename}')
         if os.path.exists(jar_path):
