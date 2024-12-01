@@ -1,4 +1,3 @@
-
 class PostgresExtractor:
     def extract(self):
-        print("Extracting data from PostgreSQL...")
+        print('Extracting data from PostgreSQL...')
