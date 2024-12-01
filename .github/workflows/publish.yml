@@ -27,12 +27,14 @@ jobs:
         run: |
           TAG=${GITHUB_REF#refs/tags/}
           VERSION=${TAG#v}
+          git checkout main  # Ensure we are on the main branch
+          git pull origin main  # Pull latest changes
           sed -i "s/version='.*'/version='$VERSION'/" setup.py
           git config user.name "GitHub Actions"
           git config user.email "actions@github.com"
           git add setup.py
           git commit -m "Update version to $VERSION"
-          git push origin main
+          git push origin main  # Push changes to main
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
