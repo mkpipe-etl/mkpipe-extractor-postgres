@@ -35,7 +35,7 @@ class PostgresExtractor:
         conf.set('spark.driver.memory', self.settings.spark_driver_memory)
         conf.set('spark.executor.memory', self.settings.spark_executor_memory)
         script_dir = Path(__file__).parent  # Directory where the script is located
-        jars_path = script_dir / 'jars'     # Path to the jars folder
+        jars_path = script_dir / 'jars'  # Path to the jars folder
         conf.set('spark.driver.extraClassPath', str(jars_path) + '/*')
         conf.set('spark.network.timeout', '600s')
         conf.set('spark.sql.parquet.datetimeRebaseModeInRead', 'CORRECTED')
@@ -43,8 +43,13 @@ class PostgresExtractor:
         conf.set('spark.sql.parquet.int96RebaseModeInRead', 'CORRECTED')
         conf.set('spark.sql.parquet.int96RebaseModeInWrite', 'CORRECTED')
         conf.set('spark.sql.session.timeZone', self.settings.timezone)
-        conf.set('spark.driver.extraJavaOptions', f'-Duser.timezone={self.settings.timezone}')
-        conf.set('spark.executor.extraJavaOptions', f'-Duser.timezone={self.settings.timezone}')
+        conf.set(
+            'spark.driver.extraJavaOptions', f'-Duser.timezone={self.settings.timezone}'
+        )
+        conf.set(
+            'spark.executor.extraJavaOptions',
+            f'-Duser.timezone={self.settings.timezone}',
+        )
         conf.set(
             'spark.driver.extraJavaOptions',
             '-XX:ErrorFile=/tmp/java_error%p.log -XX:HeapDumpPath=/tmp',
@@ -59,8 +64,12 @@ class PostgresExtractor:
         name = t['name']
         target_name = t['target_name']
         iterate_column_type = t['iterate_column_type']
-        iterate_batch_size = t.get('iterate_batch_size', self.settings.default_iterate_batch_size)
-        iterate_max_loop = t.get('iterate_max_loop', self.settings.default_iterate_max_loop)
+        iterate_batch_size = t.get(
+            'iterate_batch_size', self.settings.default_iterate_batch_size
+        )
+        iterate_max_loop = t.get(
+            'iterate_max_loop', self.settings.default_iterate_max_loop
+        )
         custom_query = t.get('custom_query', None)
         custom_query_file = t.get('custom_query_file', None)
         if custom_query_file:
@@ -70,7 +79,9 @@ class PostgresExtractor:
             with open(custom_query_file_path, 'r') as f:
                 custom_query = f.read()
 
-        custom_partition_count = t.get('partition_count', self.settings.partitions_count)
+        custom_partition_count = t.get(
+            'partition_count', self.settings.partitions_count
+        )
         partitions_column_ = t.get('partitions_column')
         fetchsize = t.get('fetchsize', 100_000)
 
@@ -223,9 +234,9 @@ class PostgresExtractor:
             data['last_point_value'] = last_point_value  # update with the new max
             data['loop'] = index  # update loop index
             data['number_of_columns'] = count_col
-            data[
-                'number_of_rows'
-            ] += count_row  # add current loop's row count to the cumulative total
+            data['number_of_rows'] += (
+                count_row  # add current loop's row count to the cumulative total
+            )
 
             message = dict(
                 table_name=target_name,
@@ -243,7 +254,9 @@ class PostgresExtractor:
         target_name = t['target_name']
         message = dict(table_name=target_name, status='extracting')
         logger.info(message)
-        custom_partition_count = t.get('partition_count', self.settings.partitions_count)
+        custom_partition_count = t.get(
+            'partition_count', self.settings.partitions_count
+        )
         fetchsize = t.get('fetchsize', 100_000)
         partitions_column_ = t.get('partitions_column', None)
 
