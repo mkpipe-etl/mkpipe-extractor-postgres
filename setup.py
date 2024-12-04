@@ -9,7 +9,7 @@ setup(
     include_package_data=True,
     entry_points={
         'mkpipe.extractors': [
-            'postgres = mkpipe_extractor_postgres:PostgresExtractor',
+            'postgresql = mkpipe_extractor_postgres:PostgresExtractor',
         ],
     },
     description='PostgreSQL extractor for mkpipe.',

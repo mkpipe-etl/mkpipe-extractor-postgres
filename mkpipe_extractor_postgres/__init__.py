@@ -81,7 +81,7 @@ class PostgresExtractor:
         message = dict(table_name=target_name, status='extracting')
         logger.info(message)
         parquet_path = os.path.abspath(
-            os.path.join(self.settings.ROOT_DIR, '..', 'volume_data', 'elt', 'output', target_name)
+            os.path.join(self.settings.ROOT_DIR, 'artifacts', target_name)
         )
 
         last_point = get_last_point(target_name)
@@ -258,7 +258,7 @@ class PostgresExtractor:
 
         write_mode = 'overwrite'
         parquet_path = os.path.abspath(
-            os.path.join(self.settings.ROOT_DIR, '..', 'volume_data', 'elt', 'output', target_name)
+            os.path.join(self.settings.ROOT_DIR, 'artifacts', target_name)
         )
 
         if not custom_query:
