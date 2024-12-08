@@ -7,12 +7,16 @@ from pyspark import SparkConf
 
 from mkpipe.utils import log_container, Logger
 from mkpipe.functions_db import get_table_status, get_last_point, manifest_table_update
+from mkpipe.utils.base_class import PipeSettings
 import pyspark.sql.functions as F
 
 
 class PostgresExtractor:
     def __init__(self, config, settings):
-        self.settings = settings
+        if isinstance(settings, dict):
+            self.settings = PipeSettings(**settings)
+        else:
+            self.settings = settings
         self.connection_params = config['connection_params']
         self.table = config['table']
         self.pass_on_error = config.get('pass_on_error', None)
