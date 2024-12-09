@@ -364,15 +364,17 @@ class PostgresExtractor:
 
     @log_container(__file__)
     def extract(self):
-        print('Extracting data from PostgreSQL...')
         extract_start_time = datetime.datetime.now()
         logger = Logger(__file__)
+        logger.info({'message': 'Extracting data from PostgreSQL...'})
         t = self.table
         try:
             target_name = t['target_name']
             replication_method = t.get('replication_method', None)
             if get_table_status(target_name) in ['extracting', 'loading']:
-                print(f'Skipping {target_name}, already in progress')
+                logger.info(
+                    {'message': f'Skipping {target_name}, already in progress...'}
+                )
                 data = {
                     'table_name': target_name,
                     'status': 'completed',
