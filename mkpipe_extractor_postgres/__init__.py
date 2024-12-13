@@ -166,7 +166,6 @@ class PostgresExtractor:
         min_max_tuple = [(min(x), max(x)) for x in chunks]
 
         if not min_max_tuple:
-            spark.stop()
             if not last_point:
                 # Empty table, need schema fetc
                 return self.extract_full(t)
@@ -261,7 +260,6 @@ class PostgresExtractor:
             )
             logger.info(message)
         logger.info(data)
-        spark.stop()
         return data
 
     def extract_full(self, t):
@@ -373,7 +371,6 @@ class PostgresExtractor:
             meta_data=data,
         )
         logger.info(message)
-        spark.stop()
         return data
 
     @log_container(__file__)
