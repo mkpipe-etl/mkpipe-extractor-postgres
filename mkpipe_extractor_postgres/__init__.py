@@ -9,7 +9,7 @@ from mkpipe.config import load_config
 from mkpipe.utils import log_container, Logger
 from mkpipe.functions_db import get_db_connector
 from mkpipe.utils.base_class import PipeSettings
-from .registry_jar import collect_jars
+from mkpipe.plugins.registry_jar import collect_jars
 
 class PostgresExtractor:
     def __init__(self, config, settings):
