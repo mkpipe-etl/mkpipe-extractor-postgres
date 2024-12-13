@@ -10,7 +10,7 @@ from mkpipe.config import load_config
 from mkpipe.utils import log_container, Logger
 from mkpipe.functions_db import get_db_connector
 from mkpipe.utils.base_class import PipeSettings
-
+from mkpipe.plugins import collect_jars
 
 class PostgresExtractor:
     def __init__(self, config, settings):
@@ -39,12 +39,7 @@ class PostgresExtractor:
         self.backend = get_db_connector(db_type)(connection_params)
 
     def create_spark_session(self):
-        import glob
-        script_dir = Path(__file__).parent  # Directory where the script is located
-        jars_path = str(script_dir) + '/jars/*'  # Path to the jars folder
-        jars = ",".join(glob.glob(jars_path))
-
-
+        jars = collect_jars() 
         conf = SparkConf()
         conf.setAppName(__file__)
         conf.setMaster('local[*]')
