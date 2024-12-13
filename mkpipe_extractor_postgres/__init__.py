@@ -1,6 +1,5 @@
 import os
 import datetime
-from pathlib import Path
 from urllib.parse import quote_plus
 from pyspark.sql import SparkSession
 from pyspark import SparkConf
@@ -10,7 +9,7 @@ from mkpipe.config import load_config
 from mkpipe.utils import log_container, Logger
 from mkpipe.functions_db import get_db_connector
 from mkpipe.utils.base_class import PipeSettings
-from mkpipe.plugins import collect_jars
+from .registry_jar import collect_jars
 
 class PostgresExtractor:
     def __init__(self, config, settings):
