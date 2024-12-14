@@ -11,6 +11,7 @@ from mkpipe.functions_db import get_db_connector
 from mkpipe.utils.base_class import PipeSettings
 from mkpipe.plugins.registry_jar import collect_jars
 
+
 class PostgresExtractor:
     def __init__(self, config, settings):
         if isinstance(settings, dict):
@@ -38,7 +39,7 @@ class PostgresExtractor:
         self.backend = get_db_connector(db_type)(connection_params)
 
     def create_spark_session(self):
-        jars = collect_jars() 
+        jars = collect_jars()
         conf = SparkConf()
         conf.setAppName(__file__)
         conf.setMaster('local[*]')
@@ -234,7 +235,12 @@ class PostgresExtractor:
 
             # df.filter(df.cust_ord_id == 285708).select("udate").show(truncate=False)
             # df = df.dropDuplicates() # this process affecting the partition_count be careful
-            df.write.parquet(parquet_path, mode=p_write_mode)
+            (
+                df.write.option('compression', self.settings.compression_codec)
+                .mode(p_write_mode)
+                .parquet(parquet_path)
+            )
+
             count_col = len(df.columns)
             count_row = df.count()
             last_point_value = max_filter
