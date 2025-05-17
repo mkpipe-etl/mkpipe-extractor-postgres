@@ -89,7 +89,9 @@ class PostgresExtractor:
         custom_partition_count = t.get(
             'partition_count', self.settings.partitions_count
         )
-        chunk_count_for_partition = t.get('chunk_count_for_partition', 1)
+        chunk_count_for_partition = t.get(
+            'chunk_count_for_partition', self.settings.default_chunk_count_for_partition
+        )
         partitions_column_ = t.get('partitions_column')
         fetchsize = t.get('fetchsize', 100_000)
 
