@@ -1,4 +1,4 @@
-from mkpipe.functions_spark.base_extractor import BaseExtractor
+from mkpipe.functions_spark import BaseExtractor
 
 
 class PostgresExtractor(BaseExtractor):
