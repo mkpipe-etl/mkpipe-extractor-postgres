@@ -3,8 +3,6 @@ from mkpipe.functions_spark.base_extractor import BaseExtractor
 
 class PostgresExtractor(BaseExtractor):
     def __init__(self, config, settings):
-        self.schema = self.connection_params['schema']
-
         super().__init__(
             config,
             settings,
