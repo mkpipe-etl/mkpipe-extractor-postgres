@@ -6,6 +6,10 @@ class PostgresExtractor(BaseExtractor):
         super().__init__(
             config,
             settings,
-            driver_name='clickhouse',
-            driver_jdbc='com.clickhouse.jdbc.ClickHouseDriver',
+            driver_name='postgresql',
+            driver_jdbc='org.postgresql.Driver',
         )
+        self.schema = self.connection_params['schema']
+
+    def build_jdbc_url(self):
+        return f'jdbc:{self.driver_name}://{self.host}:{self.port}/{self.database}?user={self.username}&password={self.password}&currentSchema={self.schema}'
