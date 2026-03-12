@@ -3,7 +3,7 @@ from mkpipe.spark import JdbcExtractor
 JAR_PACKAGES = ['org.postgresql:postgresql:42.7.4']
 
 
-class PostgresExtractor(JdbcExtractor, variant='postgresql'):
+class PostgresExtractor(JdbcExtractor, variant='postgres'):
     driver_name = 'postgresql'
     driver_jdbc = 'org.postgresql.Driver'
 
